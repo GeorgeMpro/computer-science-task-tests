@@ -1,11 +1,11 @@
-package mamn14;
+package maman14;
 
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
 import static maman14.Ex14.*;
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class Ex14Test {
 
@@ -148,7 +148,43 @@ class Ex14Test {
         assertNotTrans("abbcd", "abcd");
     }
 
-    // Question 4
+
+    @Test
+    void shouldRecognizeStandingOnExitCell() {
+        assertEquals(0, countPaths(matrixBuilder(new int[]{0, 0, 0}, new int[]{0, 0, 0})));
+        assertEquals(0, countPaths(matrixBuilder(arrBuilder(0, 0, 0, 0), arrBuilder(0, 0, 0, 0))));
+        assertEquals(1, countPaths(new int[][]{{1}}));
+
+    }
+
+    @Test
+    void whenSingleStep_shouldRecognizeExit() {
+        assertEquals(1, countPaths(matrixBuilder(arrBuilder(11, 0), arrBuilder(0, 0))));
+        assertEquals(1, countPaths(matrixBuilder(arrBuilder(12, 0, 0), arrBuilder(0, 0, 0))));
+        assertEquals(1, countPaths(new int[][]{{21, 0}, {0, 0}, {0, 0}}));
+        assertEquals(1, countPaths(new int[][]{{31, 0}, {0, 0}, {0, 0}, {0, 0}}));
+
+    }
+
+    @Test
+    void whenTwoStepShould_shouldRecognizeExit() {
+        assertEquals(1, countPaths(new int[][]{{11, 0}, {0, 10}, {0, 0}}));
+        assertEquals(1, countPaths(new int[][]{{11, 0}, {0, 10}, {0, 10}, {0, 0}}));
+        assertEquals(1, countPaths(new int[][]{{11, 0}, {10, 10}, {0, 10}, {0, 0}}));
+    }
+
+    @Test
+    void expectedTestArray() {
+        //Note: expected by tester
+        assertEquals(3, countPaths(new int[][]{
+                {12, 22, 23, 54},
+                {43, 35, 21, 20},
+                {34, 21, 43, 21},
+                {25, 30, 0, 20},
+                {0, 22, 10, 10},
+                {20, 13, 3, 45}
+        }));
+    }
 
 
     // Helper Methods
@@ -186,4 +222,8 @@ class Ex14Test {
         assertFalse(isTrans(original, transformed));
     }
 
+    // Question 4
+    private int[][] matrixBuilder(int[] rows, int[] cols) {
+        return new int[][]{rows, cols};
+    }
 }
